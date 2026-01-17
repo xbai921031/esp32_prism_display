@@ -1,53 +1,75 @@
-| Supported Targets | ESP32 | ESP32-C2 | ESP32-C3 | ESP32-C5 | ESP32-C6 | ESP32-C61 | ESP32-H2 | ESP32-H21 | ESP32-H4 | ESP32-P4 | ESP32-S2 | ESP32-S3 | Linux |
-| ----------------- | ----- | -------- | -------- | -------- | -------- | --------- | -------- | --------- | -------- | -------- | -------- | -------- | ----- |
+| Supported Targets | ESP32 | ESP32-C2 | ESP32-C3 | ESP32-C5 | ESP32-C6 | ESP32-C61 | ESP32-H2 | ESP32-H21 | ESP32-H4 | ESP32-P4 | ESP32-S2 | ESP32-S3 |
+| ----------------- | ----- | -------- | -------- | -------- | -------- | --------- | -------- | --------- | -------- | -------- | -------- | -------- |
 
-# Hello World Example
-
-Starts a FreeRTOS task to print "Hello World".
+# FreeRTOS Real Time Stats Example
 
 (See the README.md file in the upper level 'examples' directory for more information about examples.)
 
+FreeRTOS provides the function `vTaskGetRunTimeStats()` to obtain CPU usage statistics of tasks. However, these statistics are with respect to the entire runtime of FreeRTOS (i.e. **run time stats**). Furthermore, statistics of `vTaskGetRunTimeStats()` are only valid whilst the timer for run time statistics has not overflowed.
+
+This example demonstrates how to get CPU usage statistics of tasks with respect to a specified duration (i.e. **real time stats**) rather than over the entire runtime of FreeRTOS. The `print_real_time_stats()` function of this example demonstrates how this can be achieved.
+
 ## How to use example
 
-Follow detailed instructions provided specifically for this example.
+### Hardware Required
 
-Select the instructions depending on Espressif chip installed on your development board:
+This example should be able to run on any commonly available ESP32 development board.
 
-- [ESP32 Getting Started Guide](https://docs.espressif.com/projects/esp-idf/en/stable/get-started/index.html)
-- [ESP32-S2 Getting Started Guide](https://docs.espressif.com/projects/esp-idf/en/latest/esp32s2/get-started/index.html)
-
-
-## Example folder contents
-
-The project **hello_world** contains one source file in C language [hello_world_main.c](main/hello_world_main.c). The file is located in folder [main](main).
-
-ESP-IDF projects are built using CMake. The project build configuration is contained in `CMakeLists.txt` files that provide set of directives and instructions describing the project's source files and targets (executable, library, or both).
-
-Below is short explanation of remaining files in the project folder.
+### Configure the project
 
 ```
-├── CMakeLists.txt
-├── pytest_hello_world.py      Python script used for automated testing
-├── main
-│   ├── CMakeLists.txt
-│   └── hello_world_main.c
-└── README.md                  This is the file you are currently reading
+idf.py menuconfig
 ```
 
-For more information on structure and contents of ESP-IDF projects, please refer to Section [Build System](https://docs.espressif.com/projects/esp-idf/en/latest/esp32/api-guides/build-system.html) of the ESP-IDF Programming Guide.
+* Select `Enable FreeRTOS to collect run time stats` under `Component Config > FreeRTOS` (this should be enabled in the example by default)
 
-## Troubleshooting
+* `Choose the clock source for run time stats` configured under `Component Config > FreeRTOS`. The `esp_timer` should be selected be default. This option will affect the time unit resolution in which the statistics are measured with respect to.
 
-* Program upload failure
+### Build and Flash
 
-    * Hardware connection is not correct: run `idf.py -p PORT monitor`, and reboot your board to see if there are any output logs.
-    * The baud rate for downloading is too high: lower your baud rate in the `menuconfig` menu, and try again.
+Build the project and flash it to the board, then run monitor tool to view serial output:
 
-## Technical support and feedback
+```
+idf.py -p PORT flash monitor
+```
 
-Please use the following feedback channels:
+(Replace PORT with the name of the serial port to use.)
 
-* For technical queries, go to the [esp32.com](https://esp32.com/) forum
-* For a feature request or bug report, create a [GitHub issue](https://github.com/espressif/esp-idf/issues)
+(To exit the serial monitor, type ``Ctrl-]``.)
 
-We will get back to you as soon as possible.
+See the Getting Started Guide for full steps to configure and use ESP-IDF to build projects.
+
+## Example Output
+
+The example should have the following log output:
+
+```
+...
+Getting real time stats over 100 ticks
+| Task | Run Time | Percentage
+| stats | 1304 | 0%
+| IDLE0 | 206251 | 10%
+| IDLE1 | 464785 | 23%
+| spin2 | 225389 | 11%
+| spin0 | 227174 | 11%
+| spin4 | 225303 | 11%
+| spin1 | 207264 | 10%
+| spin3 | 225331 | 11%
+| spin5 | 225369 | 11%
+| Tmr Svc | 0 | 0%
+| esp_timer | 0 | 0%
+| ipc1 | 0 | 0%
+| ipc0 | 0 | 0%
+Real time stats obtained
+...
+```
+
+## Example Breakdown
+
+### Spin tasks
+
+During the examples initialization process, multiple `spin` tasks are created. These tasks will simply spin a certain number of CPU cycles to consume CPU time, then block for a predetermined period.
+
+### Understanding the stats
+
+From the log output, it can be seen that the spin tasks consume nearly an equal amount of time over the specified stats collection period of `print_real_time_stats()`. The real time stats also display the CPU time consumption of other tasks created by default in ESP-IDF (e.g. `IDLE` and `ipc` tasks).
