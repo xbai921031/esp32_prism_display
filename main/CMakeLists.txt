@@ -1,2 +1,10 @@
-idf_component_register(SRCS "real_time_stats_example_main.c"
-                    INCLUDE_DIRS ".")
+idf_component_register(
+    SRCS
+        "main.c"
+        "os/Os_Alarm.c"
+        "os/Os.c"
+    INCLUDE_DIRS
+        "."
+        "os"
+        "app"
+)
