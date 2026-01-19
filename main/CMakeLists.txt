@@ -1,10 +1,12 @@
 idf_component_register(
     SRCS
         "main.c"
-        "os/Os_Alarm.c"
-        "os/Os.c"
+        "Os/Os_Alarm.c"
+        "Os/Os.c"
+        "Bsp/Bsp_Lcd/Bsp_Lcd.c"
     INCLUDE_DIRS
         "."
-        "os"
-        "app"
+        "Os"
+        "Bsp/Bsp_Lcd"
+        "App"
 )
