@@ -12,3 +12,11 @@
 | Monitor and logging             | idf.py monitor \| Tee-Object -FilePath log.txt |
 | Remove build folder             | Remove-Item -Recurse -Force build              |
 | Full clean                      |  idf.py fullclean                              |
+
+## lvgl integration
+
+lvgl is not included in ESP-IDF, need add it manually.
+```bash
+cd components
+git clone https://github.com/lvgl/lvgl.git
+```

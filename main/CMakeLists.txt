@@ -9,4 +9,8 @@ idf_component_register(
         "Os"
         "Bsp/Bsp_Lcd"
         "App"
+    REQUIRES
+        lvgl
 )
+
+add_compile_definitions(LV_CONF_INCLUDE_SIMPLE)
