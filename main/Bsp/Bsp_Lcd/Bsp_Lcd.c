@@ -12,11 +12,6 @@
 #include "driver/spi_master.h"
 #include "driver/spi_common.h"
 
-#include "esp_lcd_panel_ops.h"
-#include "esp_lcd_panel_vendor.h"
-#include "esp_lcd_panel_io.h"
-#include "esp_lcd_panel_interface.h"
-
 #include "esp_heap_caps.h"
 #include "esp_log.h"
 
@@ -33,7 +28,7 @@
 #define LCD_HEIGHT 240
 #define BLOCK_HEIGHT 16
 
-static esp_lcd_panel_handle_t panel_handle = NULL;
+esp_lcd_panel_handle_t panel_handle = NULL;
 
 void bsp_lcd_init(void)
 {
@@ -53,7 +48,7 @@ void bsp_lcd_init(void)
     esp_lcd_panel_io_spi_config_t io_config = {
         .dc_gpio_num = PIN_NUM_DC,
         .cs_gpio_num = PIN_NUM_CS,
-        .pclk_hz = 10 * 1000 * 1000,
+        .pclk_hz = 40 * 1000 * 1000,
         .lcd_cmd_bits = 8,
         .lcd_param_bits = 8,
         .spi_mode = 0,
@@ -79,6 +74,7 @@ void bsp_lcd_init(void)
     gpio_set_level(PIN_NUM_BK, 1);
 }
 
+#if 0
 void bsp_lcd_fill_color(uint16_t color)
 {
     uint16_t *buf = heap_caps_malloc(LCD_WIDTH * BLOCK_HEIGHT * sizeof(uint16_t), MALLOC_CAP_DMA);
@@ -100,3 +96,4 @@ void bsp_lcd_fill_color(uint16_t color)
 
     free(buf);
 }
+#endif

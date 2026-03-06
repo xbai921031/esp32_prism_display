@@ -11,7 +11,7 @@ static void AlarmCallback(void* arg)
     Os_Alarm_t* alarm = (Os_Alarm_t*)arg;
 
     BaseType_t hpw = pdFALSE;
-    xTaskNotifyFromISR(*(alarm->task), 0, eNoAction, &hpw);
+    vTaskNotifyGiveFromISR(*(alarm->task), &hpw);
 
     if(hpw)
     {

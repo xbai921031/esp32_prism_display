@@ -4,11 +4,12 @@ idf_component_register(
         "Os/Os_Alarm.c"
         "Os/Os.c"
         "Bsp/Bsp_Lcd/Bsp_Lcd.c"
+        "App/App_Lcd/App_Lcd.c"
     INCLUDE_DIRS
         "."
         "Os"
         "Bsp/Bsp_Lcd"
-        "App"
+        "App/App_Lcd"
     REQUIRES
         lvgl
 )

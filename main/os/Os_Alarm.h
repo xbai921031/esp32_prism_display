@@ -26,17 +26,17 @@ static Os_Alarm_t OsAlarmTable[] =
     {
         .task = &OsTask1Handle,
         .offset_us = 1 * 1000,    /* 1ms offset */
-        .period_us = 1000 * 1000,   /* 1s period */
+        .period_us = 30 * 1000,   /* 30ms period */
     },
     {
         .task = &OsTask2Handle,
-        .offset_us = 400 * 1000,    /* 400ms offset */
-        .period_us = 1000 * 1000,   /* 1s period */
+        .offset_us = 4 * 1000,    /* 4ms offset */
+        .period_us = 10 * 1000,   /* 10ms period */
     },
     {
         .task = &OsTask3Handle,
-        .offset_us = 700 * 1000,    /* 700ms offset */
-        .period_us = 1000 * 1000,   /* 1s period */
+        .offset_us = 7 * 1000,    /* 7ms offset */
+        .period_us = 10 * 1000,   /* 10ms period */
     }
 };
 

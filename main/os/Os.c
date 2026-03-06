@@ -6,7 +6,8 @@
 #include "Os.h"
 #include "Os_Alarm.h"
 #include "esp_rom_sys.h"
-#include "Bsp/Bsp_Lcd/Bsp_Lcd.h"
+//#include "Bsp/Bsp_Lcd/Bsp_Lcd.h"
+#include "App/App_Lcd/App_Lcd.h"
 
 TaskHandle_t OsTask1Handle;
 TaskHandle_t OsTask2Handle;
@@ -25,7 +26,7 @@ static void OsTask1(void* arg)
     while(1)
     {
         ulTaskNotifyTake(pdTRUE, portMAX_DELAY);
-        bsp_lcd_fill_color(0xF800); /* Red */
+        App_Solar_Render();
         //esp_rom_printf("[Task1] time=%llu\r\n", esp_timer_get_time());
     }
 }
@@ -35,7 +36,6 @@ static void OsTask2(void* arg)
     while(1)
     {
         ulTaskNotifyTake(pdTRUE, portMAX_DELAY);
-        bsp_lcd_fill_color(0x07E0); /* Green */
         //esp_rom_printf("[Task2] time=%llu\r\n", esp_timer_get_time());
     }
 }
@@ -45,7 +45,6 @@ static void OsTask3(void* arg)
     while(1)
     {
         ulTaskNotifyTake(pdTRUE, portMAX_DELAY);
-        bsp_lcd_fill_color(0x001F); /* Blue */
         //esp_rom_printf("[Task2] time=%llu\r\n", esp_timer_get_time());
     }
 }
