@@ -1,4 +1,4 @@
-# ESP32-Prism-Display project use ESP-IDF toolchain
+# esp32-ClawBot project use ESP-IDF toolchain
 ## EDP-IDF common commands:
 | Description                     | Command                                        |
 | ------------------------------- | ---------------------------------------------- |

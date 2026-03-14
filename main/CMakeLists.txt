@@ -4,10 +4,12 @@ idf_component_register(
         "os/os_alarm.c"
         "os/os.c"
         "bsp/bsp_lcd/bsp_lcd.c"
+        "app/app_wifi/app_wifi.c"
     INCLUDE_DIRS
         "."
         "os"
         "bsp/bsp_lcd"
+        "app/app_wifi"
     REQUIRES
         lvgl
         esp_wifi
