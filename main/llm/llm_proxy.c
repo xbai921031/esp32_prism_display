@@ -29,8 +29,8 @@ char* llm_chat(const char* input)
     esp_http_client_config_t config = {
         .url = DEEPSEEK_URL,
         .method = HTTP_METHOD_POST,
-        .timeout_ms = 10000,
-        .skip_cert_common_name_check = true,
+        .skip_cert_common_name_check = false,
+        .use_global_ca_store = true
     };
 
     esp_http_client_handle_t client = esp_http_client_init(&config);

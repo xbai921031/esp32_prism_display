@@ -7,6 +7,7 @@
 #include <string.h>
 #include "esp_log.h"
 #include "esp_http_server.h"
+#include "message_bus.h"
 
 #define WS_PORT     81
 #define WS_URI      "/ws"
@@ -16,6 +17,7 @@ static httpd_handle_t server = NULL;
 
 static esp_err_t ws_handler(httpd_req_t *req)
 {
+    clawbot_msg msg[512];
     if(req->method == HTTP_GET)
     {
         ESP_LOGI(TAG, "WebSocket handshake done.");
@@ -49,13 +51,20 @@ static esp_err_t ws_handler(httpd_req_t *req)
         }
         buf[ws_pkt.len] = '\0';
         ESP_LOGI(TAG, "Received: %s", buf);
-
-        ws_pkt.payload = (uint8_t *)buf;
-        ret = httpd_ws_send_frame(req, &ws_pkt);
-        if(ret != ESP_OK)
+        /* Push message to queue */
+        memset(msg, 0, sizeof(msg));
+        snprintf(msg, sizeof(msg), "%s", (char *)buf);
+        if(message_publish(msg) != pdTRUE)
         {
-            ESP_LOGE(TAG, "Failed to echo.");
+            ESP_LOGE(TAG, "Failed to push message to queue.");
         }
+
+        // ws_pkt.payload = (uint8_t *)buf;
+        // ret = httpd_ws_send_frame(req, &ws_pkt);
+        // if(ret != ESP_OK)
+        // {
+        //     ESP_LOGE(TAG, "Failed to echo.");
+        // }
         free(buf);
     }
     return ESP_OK;

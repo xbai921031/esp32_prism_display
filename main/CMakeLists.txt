@@ -25,6 +25,8 @@ idf_component_register(
         nvs_flash
         esp_http_server
         esp_http_client
+        esp-tls
+        mbedtls
 )
 
 add_compile_definitions(LV_CONF_INCLUDE_SIMPLE)

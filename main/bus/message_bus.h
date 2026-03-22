@@ -9,11 +9,13 @@
 #include "freertos/FreeRTOS.h"
 #include "freertos/queue.h"
 
-typedef struct
-{
-    char content[512];
-}clawbot_msg_t;
+// typedef struct
+// {
+//     char content[512];
+// }clawbot_msg_t;
+
+typedef char clawbot_msg;
 
 void message_bus_init(void);
-int message_get(clawbot_msg_t *msg);
-int message_publish(clawbot_msg_t *msg);
+int message_get(clawbot_msg *msg);
+int message_publish(clawbot_msg *msg);

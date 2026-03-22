@@ -6,19 +6,23 @@
 #include "agent_loop.h"
 #include "message_bus.h"
 #include "llm_proxy.h"
+#include "esp_log.h"
 #include <string.h>
+
+static const char *TAG = "DEEPSEEK_ECHO";
 
 void agent_loop(void)
 {
-    clawbot_msg_t in;
-    clawbot_msg_t out;
+    clawbot_msg in[512];
+    clawbot_msg out[512];
 
-    if(message_get(&in))
+    if(message_get(in))
     {
-        char *reply = llm_chat(in.content);
+        char *reply = llm_chat(in);
 
-        memset(&out, 0, sizeof(out));
-        snprintf(out.content, sizeof(out.content), "%s", reply);
+        memset(out, 0, sizeof(out));
+        snprintf(out, sizeof(out), "%s", reply);
+        ESP_LOGI(TAG, "%s", out);
 
         //message_bus_publish_outbound(&out);
     }
