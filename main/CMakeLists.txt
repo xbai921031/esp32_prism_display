@@ -5,19 +5,26 @@ idf_component_register(
         "os/os.c"
         "lcd/lcd.c"
         "wifi/wifi.c"
-        "webserver/webserver.c"
+        "gateway/ws_server.c"
+        "bus/message_bus.c"
+        "agent/agent_loop.c"
+        "llm/llm_proxy.c"
     INCLUDE_DIRS
         "."
         "os"
         "lcd"
         "wifi"
-        "webserver"
+        "gateway"
+        "bus"
+        "agent"
+        "llm"
     REQUIRES
         lvgl
         esp_wifi
         esp_netif
         nvs_flash
         esp_http_server
+        esp_http_client
 )
 
 add_compile_definitions(LV_CONF_INCLUDE_SIMPLE)

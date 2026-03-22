@@ -1,4 +1,14 @@
 dependencies:
+  espressif/cjson:
+    component_hash: 002c6d1872ee4c97d333938ebe107a29841cc847f9de89e676714bd2844057ea
+    dependencies:
+    - name: idf
+      require: private
+      version: '>=5.0'
+    source:
+      registry_url: https://components.espressif.com/
+      type: service
+    version: 1.7.19~1
   idf:
     source:
       type: idf
@@ -11,8 +21,9 @@ dependencies:
       type: service
     version: 1.0.2
 direct_dependencies:
+- espressif/cjson
 - idf
 - jbrilha/esp_lcd_st7789
-manifest_hash: db487e249b40c94d9fb554f99a83454fac249131210f9ce4e002d486b4fc3bc7
+manifest_hash: 553dda36ae1995f12e09bb1248a587a3b7f2d2af6f6c426938f243b4854369df
 target: esp32s3
 version: 2.0.0

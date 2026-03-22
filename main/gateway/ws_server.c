@@ -18,7 +18,7 @@ static esp_err_t ws_handler(httpd_req_t *req)
 {
     if(req->method == HTTP_GET)
     {
-        ESP_LOGI(TAG, "WebSocket handshake done");
+        ESP_LOGI(TAG, "WebSocket handshake done.");
         return ESP_OK;
     }
 
@@ -54,14 +54,14 @@ static esp_err_t ws_handler(httpd_req_t *req)
         ret = httpd_ws_send_frame(req, &ws_pkt);
         if(ret != ESP_OK)
         {
-            ESP_LOGE(TAG, "Failed to echo");
+            ESP_LOGE(TAG, "Failed to echo.");
         }
         free(buf);
     }
     return ESP_OK;
 }
 
-void start_webserver(void)
+void start_ws_server(void)
 {
     static const httpd_uri_t ws_uri = {
         .uri        = WS_URI,
@@ -78,11 +78,11 @@ void start_webserver(void)
     if(httpd_start(&server, &config) == ESP_OK)
     {
         httpd_register_uri_handler(server, &ws_uri);
-        ESP_LOGI(TAG, "WebSocket server started on port %d", WS_PORT);
+        ESP_LOGI(TAG, "WebSocket server started on port %d.", WS_PORT);
     }
     else
     {
-        ESP_LOGE(TAG, "Failed to start server");
+        ESP_LOGE(TAG, "Failed to start server.");
     }
 }
 

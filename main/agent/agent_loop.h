@@ -1,0 +1,9 @@
+/*
+ *    Autor: xbai
+ *    Date: 2026/03/22
+ */
+
+#pragma once
+
+void agent_loop(void);
+

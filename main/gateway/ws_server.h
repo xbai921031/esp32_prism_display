@@ -6,5 +6,5 @@
 #pragma once
 
 
-void start_webserver(void);
+void start_ws_server(void);
 
